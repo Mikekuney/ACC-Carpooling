@@ -48,48 +48,34 @@
                   <div class="address-line">
                     <input id="address" type="text" placeholder="Enter address to search"><button onclick="geocodeAddress()">Geocode</button>
                   </div>
-                  <div class="results">
-                        <label for="name">Name:</label>          
-                        <input id="name" type="text" readonly />
-                        <label for="house-number">House number:</label>          
-                        <input id="house-number" type="text" readonly />
-                        <label for="street">Street:</label>          
-                        <input id="street" type="text" readonly />
-                        <label for="postcode">Postcode:</label>          
-                        <input id="postcode" type="text" readonly />
-                        <label for="city">City:</label>          
-                        <input id="city" type="text" readonly />
-                        <label for="state">State:</label>          
-                        <input id="state" type="text" readonly />
-                        <label for="country">Country:</label>          
-                        <input id="country" type="text" readonly />
-                  </div>
-                  <div class="status">
-                    <span id="status">Enter address and press "Geocode" button</span>
+                  <div class="form">
+                    <div class="results">
+                          <label for="name">Name:</label>          
+                          <input id="name" type="text" readonly />
+                          <label for="house-number">House number:</label>          
+                          <input id="house-number" type="text" readonly />
+                          <label for="street">Street:</label>          
+                          <input id="street" type="text" readonly />
+                          <label for="postcode">Postcode:</label>          
+                          <input id="postcode" type="text" readonly />
+                          <label for="city">City:</label>          
+                          <input id="city" type="text" readonly />
+                          <label for="state">State:</label>          
+                          <input id="state" type="text" readonly />
+                          <label for="country">Country:</label>          
+                          <input id="country" type="text" readonly />
+                    </div>
+                    <div class="status">
+                      <span id="status">Enter address and press "Geocode" button</span>
+                    </div>
                   </div>
                 </div>
-                <div id="my-map"></div>
-              </div>
+              <div id="my-map"></div>
+            </div>
+              
         </div>
     </main>
-    <section class="columns is-justify-content-space-evenly contact">
-        <div class="column is-one-quarter map">
-            <h1>this is where the map will be</h1>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51708.63473055417!2d-79.05349495718589!3d35.90316665131094!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89acc2f2e4836361%3A0x9927f586b02042ac!2sDean%20E.%20Smith%20Center!5e0!3m2!1sen!2sus!4v1648058533470!5m2!1sen!2sus" 
-            width="300" height="300" style="border:1;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-        <div class="column is-one-quarter contact-info">
-            <h3>Contact Info</h3>
-            <form action="href=#"> 
-                <input type="text" placeholder="your name">
-                <p>would like a ride to</p>
-                <input type="text" placeholder="this game">
-                <p>from this location.</p>
-                <input type="text" placeholder="pick up from">
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-      </section>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet-src.min.js" integrity="sha512-XQr+/1RXvYozXiwrumwtu3lqQmVwZ8nkLUrC/mc3HBHw4Imh++RXjwtLQFuOz3i65j9CSfKt50x6w/uUY2ovOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>"
     <script src="./assets/js/script.js"></script>
 </body>
