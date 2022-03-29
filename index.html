@@ -1,26 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css" integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css"
+        integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> 
-    
-       
-    <title>ACC Carpooling</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+    <!-- Jessie begining code -->
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"> -->
+        <link rel="stylesheet" href=".style.css" />
+        <title>Game Finder</title>
+    </head>
+
+    <section class="hero">
+        <div id="img-container-1">
+            <img id="opacity-ncstate" src="ncstate.jpg">
+            <img id="opacity-unc" src="unc 2_test.jpg">
+            <img id="opacity-duke" src="duke_test.jpg">
+        </div>
+        <div class="form">
+            <h3>Form</h3>
+            <p>Unde omnis iste natus sit voluptatem rem aperiam</p>
+            <form>
+                <label for="name">GEO CODE</label>
+                <input type="GEO CODE" placeholder="">
+                <input type="city" placeholder="City">
+            </form>
+            <!--Jessie end code-->
+
+            <title>ACC Carpooling</title>
 </head>
+
 <body>
-=======
+    =======
     <div class="hero">
         <div class="hero-body">
-          <p class="title">
-            ACC GameDay!
-          </p>
-          <p class="subtitle">
-            Hero subtitle
-          </p>
+            <p class="title">
+                ACC GameDay!
+            </p>
+            <p class="subtitle">
+                Hero subtitle
+            </p>
         </div>
     </div>
     <main>
@@ -29,7 +58,7 @@
                 <h3 class>Teams</h3>
                 <a class="column" href="#">
                     <figure class="image is-128x128">
-                     <img src="./assets/images/Screenshot 2022-03-22 191444.png">
+                        <img src="./assets/images/Screenshot 2022-03-22 191444.png">
                     </figure>
                 </a>
                 <a class="column" href="#">
@@ -45,35 +74,38 @@
             </section>
             <div class="main">
                 <div class="controls">
-                  <div class="address-line">
-                    <input id="address" type="text" placeholder="Enter address to search"><button onclick="geocodeAddress()">Geocode</button>
-                  </div>
-                  <div class="results">
-                        <label for="name">Name:</label>          
+                    <div class="address-line">
+                        <input id="address" type="text" placeholder="Enter address to search"><button
+                            onclick="geocodeAddress()">Geocode</button>
+                    </div>
+                    <div class="results">
+                        <label for="name">Name:</label>
                         <input id="name" type="text" readonly />
-                        <label for="house-number">House number:</label>          
+                        <label for="house-number">House number:</label>
                         <input id="house-number" type="text" readonly />
-                        <label for="street">Street:</label>          
+                        <label for="street">Street:</label>
                         <input id="street" type="text" readonly />
-                        <label for="postcode">Postcode:</label>          
+                        <label for="postcode">Postcode:</label>
                         <input id="postcode" type="text" readonly />
-                        <label for="city">City:</label>          
+                        <label for="city">City:</label>
                         <input id="city" type="text" readonly />
-                        <label for="state">State:</label>          
+                        <label for="state">State:</label>
                         <input id="state" type="text" readonly />
-                        <label for="country">Country:</label>          
+                        <label for="country">Country:</label>
                         <input id="country" type="text" readonly />
-                  </div>
-                  <div class="status">
-                    <span id="status">Enter address and press "Geocode" button</span>
-                  </div>
+                    </div>
+                    <div class="status">
+                        <span id="status">Enter address and press "Geocode" button</span>
+                    </div>
                 </div>
                 <div id="my-map"></div>
-              </div>
+            </div>
         </div>
     </main>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet-src.min.js" integrity="sha512-XQr+/1RXvYozXiwrumwtu3lqQmVwZ8nkLUrC/mc3HBHw4Imh++RXjwtLQFuOz3i65j9CSfKt50x6w/uUY2ovOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>"
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet-src.min.js"
+        integrity="sha512-XQr+/1RXvYozXiwrumwtu3lqQmVwZ8nkLUrC/mc3HBHw4Imh++RXjwtLQFuOz3i65j9CSfKt50x6w/uUY2ovOQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>"
     <script src="./assets/js/script.js"></script>
 </body>
 
