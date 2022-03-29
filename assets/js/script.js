@@ -86,26 +86,45 @@ var api_key = '02f2795b43078e88ef905f7d5da7';
 
 // jsonData = requests.get(url, headers=headers).json();
 
-// console.log(jsonData);
+console.log('here')
 
-var teamSchedule = function(){
-    console.log('hit')
-    // event.preventDefault();
-    var apiUrl = "https://noahs-server-proj1.herokuapp.com/https://api.sportsdata.io/v3/cbb/scores/json/Games/2021";
-    var requests = {
-        method: "GET",
-        headers: {'Ocp-Apim-Subscription-Key': '{key}'.format(key=api_key)}
-    }
-    fetch(apiUrl,requests).then(function(response){
-       if(response.ok){
-            response.json().then(function(data){
-                console.log(data);
-            })
-       }
+var api_key = '7abe0932f2b74528ba9b8e95b598590f';
 
-    })
+var schedules = function(){    
+    const params = {
+      key: api_key
+    };
+    
+    const searchParams = new URLSearchParams(params);
+    
+    var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2021?${searchParams.toString()}`;
 
+    fetch(apiUrl).then(function(response){
+      if(response.ok){
+          response.json().then(function(data){
+              console.log(data);
+          })
+      }
+    });
 };
-teamSchedule();
-                //apikey 02f2795b43078e88ef905f7d5da7
 
+function teamSchedule (teamAbbreviation) {
+  const params = {
+    key: api_key,
+  };
+  
+  const searchParams = new URLSearchParams(params);
+  
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2021/${teamAbbreviation}?${searchParams.toString()}`;
+  console.log(apiUrl);
+
+  fetch(apiUrl).then(function(response){
+    if(response.ok){
+        response.json().then(function(data){
+            console.log(data);
+        })
+    }
+  });
+};
+
+teamSchedule('SF')
