@@ -29,6 +29,15 @@ body,
     flex-direction: row;
     min-width: 400px;
 }
+.controls {
+  margin-top: 15px;
+  flex-wrap: flex;
+  flex-shrink: flex;
+}
+
+.form {
+  display: none;
+}
 
 #address {
   padding: 5px 10px;
@@ -48,5 +57,8 @@ body,
 }
 
 #my-map {
-  flex: 1;
+  flex-wrap: flex;
+  padding: 150px;
+  Margin-top: 15px;
 }
+
