@@ -6,7 +6,9 @@
 * CSS, MaterializeCSS
 * JavaScript, JQuery, Leaflet, Sportsdata.io
 ## Website
-https://tobedetermined.com
+https://mikekuney.github.io/ACC-Game-Finder/
+
+<img src="./assets/images/acc-gamefinder-scrnsht.png">
 ## Contributions made by:
 * The hard-working team at Fiery Tailspin Web Design!
 * Cailyn, Jessie, Mikey, Zac
