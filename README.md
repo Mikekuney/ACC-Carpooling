@@ -8,5 +8,5 @@
 ## Website
 https://tobedetermined.com
 ## Contributions made by:
-* The hard-working team at Firey Tailspin Web Design!
+* The hard-working team at Fiery Tailspin Web Design!
 * Cailyn, Jessie, Mikey, Zac
