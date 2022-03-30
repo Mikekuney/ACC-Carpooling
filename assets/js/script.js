@@ -12,7 +12,7 @@
 
 
 // Create a Leaflet map
-const map = L.map('my-map').setView([34.77, 77.40], 10);
+const map = L.map('my-map').setView([35.7596, 79.0193], 10);
 // Marker to save the position of found address
 let marker;
 
@@ -42,16 +42,18 @@ L.tileLayer(isRetina ? retinaUrl : baseUrl, {
 // }).addTo(map);
 
 function geocodeAddress() {
-  const address = document.getElementById("address").value;
+  if (marker) {
+    marker.remove();
+  }
+
+  // const address = document.getElementById("address").value;
+  const address = stadiumAddress;
   if (!address || address.length < 3) {
     document.getElementById("status").textContent = "The address string is too short. Enter at least three symbols";
 
     return;
   }
 
-	if (marker) {
-  	marker.remove();
-  }	
 
   const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${myAPIKey}`;
 
@@ -74,10 +76,10 @@ function geocodeAddress() {
 
       document.getElementById("status").textContent = `Found address: ${foundAddress.properties.formatted}`;
 
-			marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
-			map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
+      marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
+      map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
     });
-  }
+}
 
 var api_key = '02f2795b43078e88ef905f7d5da7';
 
@@ -86,45 +88,125 @@ var api_key = '02f2795b43078e88ef905f7d5da7';
 
 // jsonData = requests.get(url, headers=headers).json();
 
-console.log('here')
+//calls to html elements
+var teamEl = document.querySelector(".box");
+var gameDates = document.querySelector(".game-dates");
+
+// global variables
+var teamData;
+var button;
+var getTeamAbbr;
+var stadiumAddress;
+var gameTime;
+var gameList;
+var ulListEl;
+var listItemEl;
+
+//today's date
+
+var todayDate = new Date();
+
+console.log(todayDate.getUTCDate());
 
 var api_key = '7abe0932f2b74528ba9b8e95b598590f';
 
-var schedules = function(){    
-    const params = {
-      key: api_key
-    };
-    
-    const searchParams = new URLSearchParams(params);
-    
-    var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2021?${searchParams.toString()}`;
-
-    fetch(apiUrl).then(function(response){
-      if(response.ok){
-          response.json().then(function(data){
-              console.log(data);
-          })
-      }
-    });
-};
-
-function teamSchedule (teamAbbreviation) {
+var schedules = function () {
   const params = {
-    key: api_key,
+    key: api_key
   };
-  
-  const searchParams = new URLSearchParams(params);
-  
-  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2021/${teamAbbreviation}?${searchParams.toString()}`;
-  console.log(apiUrl);
 
-  fetch(apiUrl).then(function(response){
-    if(response.ok){
-        response.json().then(function(data){
-            console.log(data);
-        })
+  const searchParams = new URLSearchParams(params);
+
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2022?${searchParams.toString()}`;
+
+  fetch(apiUrl).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+      })
     }
   });
 };
 
-teamSchedule('SF')
+function teamSchedule(teamAbbreviation) {
+  const params = {
+    key: api_key,
+  };
+
+  const searchParams = new URLSearchParams(params);
+
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2022/${teamAbbreviation}?${searchParams.toString()}`;
+  console.log(apiUrl);
+
+  fetch(apiUrl).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        // console.log(data);
+        teamData = data;
+        getTeamData()
+        // console.log(teamData);
+      })
+    }
+  });
+};
+
+var createItems = function (element, className) {
+  var newItem = document.createElement(element);
+  newItem.setAttribute("class", className);
+}
+
+var getTeamData = function () {
+  gameDates.innerHTML = "";
+  console.log(teamData);
+  for (var i = 0; i < teamData.length; i++) {
+
+    var homeTeam = teamData[i].HomeTeam;
+    teamData.length = 7;
+    if (homeTeam === getTeamAbbr) {
+      
+      gameTime = teamData[i].DateTime;
+      stadiumAddress = teamData[i].Stadium.Name + ", " + teamData[i].Stadium.City;
+      var awayTeam = teamData[i].AwayTeam;
+// configure time and date using slice();
+      var startTime = gameTime.slice(11, 16);
+      var dateConfig = gameTime.slice(0, 10);
+      var monthDay = dateConfig.slice(5, 10);
+      var year = dateConfig.slice(0, 4);
+      var gameDate = monthDay + "-" + year;
+      var hourConfig = startTime.slice(0,2) - 12;
+      hourConfig = hourConfig.toString();
+      var minuteConfig = startTime.slice(2,5);
+      
+      startTime = hourConfig + minuteConfig + "pm";
+
+      if(homeTeam === "NCAR"){
+        homeTeam = "UNC";
+      }
+      var gameDateTime = "<h5>" + gameDate + " @ " + startTime + "</h5>" + "<h5>" + homeTeam + "</h5>" +
+      " vs." + "<h5>" + awayTeam + "</h5>" + "<h6>" + stadiumAddress + "</h6>" + "<div class='divider'></div>";
+  
+      $(gameDates).append(gameDateTime);
+    }
+
+  };
+  geocodeAddress();
+  displayDates()
+
+}
+
+function displayDates() {
+
+}
+// teamSchedule('SF')
+
+function teamSelection(e) {
+  button = e.target;
+  var getTeam = button.getAttribute("class");
+  // console.log(getTeam);
+  // console.log(button);
+  getTeamAbbr = getTeam;
+  teamSchedule(getTeamAbbr);
+}
+
+$(".box").click(teamSelection);
+// teamEl.addEventListener("click", teamSelection);
