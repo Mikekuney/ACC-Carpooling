@@ -12,7 +12,7 @@
 
 
 // Create a Leaflet map
-const map = L.map('my-map').setView([34.77, 77.40], 10);
+const map = L.map('my-map').setView([35.7596, 79.0193], 10);
 // Marker to save the position of found address
 let marker;
 
@@ -43,8 +43,8 @@ L.tileLayer(isRetina ? retinaUrl : baseUrl, {
 
 function geocodeAddress() {
   if (marker) {
-  	marker.remove();
-  }	
+    marker.remove();
+  }
 
   // const address = document.getElementById("address").value;
   const address = stadiumAddress;
@@ -54,7 +54,7 @@ function geocodeAddress() {
     return;
   }
 
-	
+
   const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${myAPIKey}`;
 
   // call Geocoding API - https://www.geoapify.com/geocoding-api
@@ -76,10 +76,10 @@ function geocodeAddress() {
 
       document.getElementById("status").textContent = `Found address: ${foundAddress.properties.formatted}`;
 
-			marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
-			map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
+      marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
+      map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
     });
-  }
+}
 
 var api_key = '02f2795b43078e88ef905f7d5da7';
 
@@ -98,6 +98,7 @@ var button;
 var getTeamAbbr;
 var stadiumAddress;
 var gameTime;
+var gameList;
 var ulListEl;
 var listItemEl;
 
@@ -109,82 +110,89 @@ console.log(todayDate.getUTCDate());
 
 var api_key = '7abe0932f2b74528ba9b8e95b598590f';
 
-var schedules = function(){    
-    const params = {
-      key: api_key
-    };
-    
-    const searchParams = new URLSearchParams(params);
-    
-    var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2021?${searchParams.toString()}`;
-
-    fetch(apiUrl).then(function(response){
-      if(response.ok){
-          response.json().then(function(data){
-              console.log(data);
-          })
-      }
-    });
-};
-
-function teamSchedule (teamAbbreviation) {
+var schedules = function () {
   const params = {
-    key: api_key,
+    key: api_key
   };
-  
-  const searchParams = new URLSearchParams(params);
-  
-  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2021/${teamAbbreviation}?${searchParams.toString()}`;
-  console.log(apiUrl);
 
-  fetch(apiUrl).then(function(response){
-    if(response.ok){
-        response.json().then(function(data){
-          // console.log(data);
-            teamData = data;
-            getTeamData()
-            // console.log(teamData);
-        })
+  const searchParams = new URLSearchParams(params);
+
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2021?${searchParams.toString()}`;
+
+  fetch(apiUrl).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        console.log(data);
+      })
     }
   });
 };
 
-var createItems = function(element, className){
+function teamSchedule(teamAbbreviation) {
+  const params = {
+    key: api_key,
+  };
+
+  const searchParams = new URLSearchParams(params);
+
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2021/${teamAbbreviation}?${searchParams.toString()}`;
+  console.log(apiUrl);
+
+  fetch(apiUrl).then(function (response) {
+    if (response.ok) {
+      response.json().then(function (data) {
+        // console.log(data);
+        teamData = data;
+        getTeamData()
+        // console.log(teamData);
+      })
+    }
+  });
+};
+
+var createItems = function (element, className) {
   var newItem = document.createElement(element);
   newItem.setAttribute("class", className);
 }
 
-var getTeamData = function(){
-  // gameDates.innerHTML = "";
+var getTeamData = function () {
+  gameDates.innerHTML = "";
   console.log(teamData);
-  for(var i = 0; i < teamData.length; i++){
-    
+  for (var i = 0; i < teamData.length; i++) {
+
     var homeTeam = teamData[i].HomeTeam;
-    
-    if(homeTeam === getTeamAbbr){
-      
+    teamData.length = 7;
+    if (homeTeam === getTeamAbbr) {
+
       gameTime = teamData[i].DateTime;
       stadiumAddress = teamData[i].Stadium.Name + ", " + teamData[i].Stadium.City;
       var awayTeam = teamData[i].AwayTeam;
-      console.log(homeTeam, " ", gameTime, " at ", stadiumAddress, " against ", awayTeam);
-      
-      var gameDateTime = "<p>" + gameTime + " vs. " + awayTeam + "</p>" ;
-      $(gameDates).append(gameDateTime);
-      }
+      var startTime = gameTime.slice(11, 16);
+      var dateConfig = gameTime.slice(0, 10);
+      var monthDay = dateConfig.slice(5, 10);
+      var year = dateConfig.slice(0, 4)
 
-    };
-    geocodeAddress();
-    displayDates()
+      console.log(startTime);
+
+      var gameDateTime = "<h5>" + monthDay + "-" + year + " @ " + startTime + "</h5>" + "<h5>" + homeTeam + "</h5>" +
+      " vs." + "<h5>" + awayTeam + "</h5>" + "<h6>" + stadiumAddress + "</h6>" + "<div class='divider'></div>";
   
+      $(gameDates).append(gameDateTime);
+    }
+
+  };
+  geocodeAddress();
+  displayDates()
+
 }
 
-function displayDates(){
-  
+function displayDates() {
+
 }
 // teamSchedule('SF')
 
-function teamSelection(e){
-  button = e.target; 
+function teamSelection(e) {
+  button = e.target;
   var getTeam = button.getAttribute("class");
   // console.log(getTeam);
   // console.log(button);
