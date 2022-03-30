@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.min.css"integrity="sha512-1xoFisiGdy9nvho8EgXuXvnpR5GAMSjFwp40gSRE3NwdUdIMIKuPa7bqoUhLD0O/5tPNhteAsE5XyyMi5reQVA=="crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" type="text/css" media="screen,projection" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="./assets/css/materialize.min.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>ACC Game Finder!</title>
+</head>
+  
+<body>
+  <header class="col sm12 l2">
+    <img src="./assets/images/acc_basketball.png" alt="acc basketball logo">
+    <h1>Game Finder</h1>
+  </header>
+  <div class="nav-wrapper col sm12 center-align l2">
+    <nav class="center-align">
+      <ul>
+        <li><a href= "#teams">Teams</a></li>
+        <li><a href="#games">Upcoming Games</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+  <main>
+   
+    <div>
+      <section>
+
+        <div  class="section-title">
+
+          <h3>Click on your team logo to display upcoming home games!</h3>
+          <ul id="teams" class="container">
+            <li class="col s12 center-align md6 l2 center-align box">
+              <img class="NCAR" src="./assets/images/unc 2_test.jpg">
+            </li>
+            <li class="col s12 center-align md6 l2 center-align box">
+              <img class="DUKE" src="./assets/images/duke_test.jpg">
+            </li>
+            <li class="col s12 center-align md6 l2 center-align box">
+              <img class="NCST"  src="./assets/images/ncstate.jpg">
+            </li>
+          </ul>
+        </div>
+      </section>
+      <div class="divider"></div>
+      <div id="game-container" class="row">
+        <section id="games" class="sm6 center-align offset-s6 l2 game-list">
+          <div>
+              <h3 class="section-title">Upcoming Games</h3>
+              <p class="game-dates"></p>
+          </div>
+        </section>
+      </div>
+    </div>
+    <div class="map-main">
+      <div class="controls">
+        <div class="address-line">
+          <input id="address" type="text" placeholder="Enter address to search"><button onclick="geocodeAddress()">Geocode</button>
+        </div>
+        <div class="form">
+          <div class="results">
+                <label for="name">Name:</label>          
+                <input id="name" type="text" readonly />
+                <label for="house-number">House number:</label>          
+                <input id="house-number" type="text" readonly />
+                <label for="street">Street:</label>          
+                <input id="street" type="text" readonly />
+                <label for="postcode">Postcode:</label>          
+                <input id="postcode" type="text" readonly />
+                <label for="city">City:</label>          
+                <input id="city" type="text" readonly />
+                <label for="state">State:</label>          
+                <input id="state" type="text" readonly />
+                <label for="country">Country:</label>          
+                <input id="country" type="text" readonly />
+          </div>
+          <div class="status">
+            <span id="status">Enter address and press "Geocode" button</span>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+    <div id="my-map"></div>
+    <div id="about" class="container">About</div> 
+  </main>
+  
+  
+  <footer>&copy Firey Tailspin Web Design 2022</footer> 
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet-src.min.js" integrity="sha512-XQr+/1RXvYozXiwrumwtu3lqQmVwZ8nkLUrC/mc3HBHw4Imh++RXjwtLQFuOz3i65j9CSfKt50x6w/uUY2ovOQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/js/materialize.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+
+</html>
