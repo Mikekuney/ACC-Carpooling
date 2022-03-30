@@ -117,7 +117,7 @@ var schedules = function () {
 
   const searchParams = new URLSearchParams(params);
 
-  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2021?${searchParams.toString()}`;
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/Games/2022?${searchParams.toString()}`;
 
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
@@ -135,7 +135,7 @@ function teamSchedule(teamAbbreviation) {
 
   const searchParams = new URLSearchParams(params);
 
-  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2021/${teamAbbreviation}?${searchParams.toString()}`;
+  var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2022/${teamAbbreviation}?${searchParams.toString()}`;
   console.log(apiUrl);
 
   fetch(apiUrl).then(function (response) {
@@ -163,18 +163,26 @@ var getTeamData = function () {
     var homeTeam = teamData[i].HomeTeam;
     teamData.length = 7;
     if (homeTeam === getTeamAbbr) {
-
+      
       gameTime = teamData[i].DateTime;
       stadiumAddress = teamData[i].Stadium.Name + ", " + teamData[i].Stadium.City;
       var awayTeam = teamData[i].AwayTeam;
+// configure time and date using slice();
       var startTime = gameTime.slice(11, 16);
       var dateConfig = gameTime.slice(0, 10);
       var monthDay = dateConfig.slice(5, 10);
-      var year = dateConfig.slice(0, 4)
+      var year = dateConfig.slice(0, 4);
+      var gameDate = monthDay + "-" + year;
+      var hourConfig = startTime.slice(0,2) - 12;
+      hourConfig = hourConfig.toString();
+      var minuteConfig = startTime.slice(2,5);
+      
+      startTime = hourConfig + minuteConfig + "pm";
 
-      console.log(startTime);
-
-      var gameDateTime = "<h5>" + monthDay + "-" + year + " @ " + startTime + "</h5>" + "<h5>" + homeTeam + "</h5>" +
+      if(homeTeam === "NCAR"){
+        homeTeam = "UNC";
+      }
+      var gameDateTime = "<h5>" + gameDate + " @ " + startTime + "</h5>" + "<h5>" + homeTeam + "</h5>" +
       " vs." + "<h5>" + awayTeam + "</h5>" + "<h6>" + stadiumAddress + "</h6>" + "<div class='divider'></div>";
   
       $(gameDates).append(gameDateTime);
