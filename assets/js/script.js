@@ -42,17 +42,19 @@ L.tileLayer(isRetina ? retinaUrl : baseUrl, {
 // }).addTo(map);
 
 function geocodeAddress() {
-  const address = document.getElementById("address").value;
+  if (marker) {
+  	marker.remove();
+  }	
+
+  // const address = document.getElementById("address").value;
+  const address = stadiumAddress;
   if (!address || address.length < 3) {
     document.getElementById("status").textContent = "The address string is too short. Enter at least three symbols";
 
     return;
   }
 
-	if (marker) {
-  	marker.remove();
-  }	
-
+	
   const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${myAPIKey}`;
 
   // call Geocoding API - https://www.geoapify.com/geocoding-api
@@ -86,7 +88,24 @@ var api_key = '02f2795b43078e88ef905f7d5da7';
 
 // jsonData = requests.get(url, headers=headers).json();
 
-console.log('here')
+//calls to html elements
+var teamEl = document.querySelector(".box");
+var gameDates = document.querySelector(".game-dates");
+
+// global variables
+var teamData;
+var button;
+var getTeamAbbr;
+var stadiumAddress;
+var gameTime;
+var ulListEl;
+var listItemEl;
+
+//today's date
+
+var todayDate = new Date();
+
+console.log(todayDate.getUTCDate());
 
 var api_key = '7abe0932f2b74528ba9b8e95b598590f';
 
@@ -108,6 +127,7 @@ var schedules = function(){
     });
 };
 
+
 function teamSchedule (teamAbbreviation) {
   const params = {
     key: api_key,
@@ -121,10 +141,62 @@ function teamSchedule (teamAbbreviation) {
   fetch(apiUrl).then(function(response){
     if(response.ok){
         response.json().then(function(data){
-            console.log(data);
+          // console.log(data);
+            teamData = data;
+            getTeamData()
+            // console.log(teamData);
         })
     }
   });
 };
 
-teamSchedule('SF')
+var createItems = function(element, className){
+  var newItem = document.createElement(element);
+  newItem.setAttribute("class", className);
+}
+
+// ulListEl = createItems("ul", "ulListClass");
+// listItemEl = createItems("li", "listItemClass");
+// var newListItem = document.querySelector(".listItemClass");
+
+var getTeamData = function(){
+  gameDates.innerHTML = "";
+  console.log(teamData);
+  for(var i = 0; i < teamData.length; i++){
+    
+    var homeTeam = teamData[i].HomeTeam;
+    
+    if(homeTeam === getTeamAbbr){
+      
+      gameTime = teamData[i].DateTime;
+      stadiumAddress = teamData[i].Stadium.Name + ", " + teamData[i].Stadium.City;
+      var awayTeam = teamData[i].AwayTeam;
+      console.log(homeTeam, " ", gameTime, " at ", stadiumAddress, " against ", awayTeam);
+      
+      var gameDateTime = "<p>" + gameTime + " vs. " + awayTeam + "</p>" ;
+      $(gameDates).append(gameDateTime);
+      }
+
+    };
+    geocodeAddress();
+    displayDates()
+  
+}
+
+function displayDates(){
+  
+}
+// teamSchedule('SF')
+
+
+
+function teamSelection(e){
+  button = e.target; 
+  var getTeam = button.getAttribute("id");
+  // console.log(getTeam);
+  // console.log(button);
+  getTeamAbbr = getTeam;
+  teamSchedule(getTeamAbbr);
+}
+
+$(".box").click(teamSelection);

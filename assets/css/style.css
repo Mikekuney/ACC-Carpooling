@@ -46,7 +46,24 @@ body,
 .status {
     padding: 10px;
 }
-
-#my-map {
+.mapBox{
+  display: flex;
+}
+.my-map {
   flex: 1;
+  width: auto;
+  height: 400px;
+  margin: 200px;
+}
+.controls {
+  display: none; 
+}
+.box img {
+  width: 100%;
+  height: auto;
+}
+.game-dates {
+  width: 1000px;;
+  height:auto;
+  border: 1px solid black;
 }
