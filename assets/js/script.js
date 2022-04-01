@@ -12,7 +12,7 @@
 
 
 // Create a Leaflet map
-const map = L.map('my-map').setView([35.7596, 79.0193], 10);
+const map = L.map('my-map').setView([35.7596, -79.0193], 10);
 // Marker to save the position of found address
 let marker;
 
@@ -40,20 +40,23 @@ L.tileLayer(isRetina ? retinaUrl : baseUrl, {
 // L.control.zoom({
 //   position: 'bottom-right'
 // }).addTo(map);
-
+var address;
 function geocodeAddress() {
   if (marker) {
     marker.remove();
   }
 
-  // const address = document.getElementById("address").value;
-  const address = stadiumAddress;
-  if (!address || address.length < 3) {
-    document.getElementById("status").textContent = "The address string is too short. Enter at least three symbols";
+  address = document.getElementById("address");
+  address = address.value;
 
-    return;
+  if (!address) {
+    address = stadiumAddress;
   }
 
+  if (!address || address.length < 3) {
+    document.getElementById("status").textContent = "The address string is too short. Enter at least three symbols";
+    return;
+  }
 
   const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${myAPIKey}`;
 
@@ -79,8 +82,35 @@ function geocodeAddress() {
       marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
       map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
     });
+  saveSearch()
 }
 
+var userSearch;
+
+function saveSearch() {
+
+  userSearch = JSON.parse(localStorage.getItem("userSearch")) || [];
+
+  if (!userSearch.includes(address)) {
+    userSearch.push(address);
+  }
+
+  localStorage.setItem("userSearch", JSON.stringify(userSearch));
+  recentSearches()
+};
+var createItem = function (element, className){
+  var newItem = document.createElement(element);
+  newItem.setAttribute("class", className);
+};
+
+function recentSearches() {
+
+  for (var i = 0; i < userSearch.length; i++) {
+    console.log(userSearch[i]); 
+  }
+  
+}
+///////////////////////////////////////////////////////////////////////////////////////////////
 var api_key = '02f2795b43078e88ef905f7d5da7';
 
 // url = 'https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/{season}/{team}';
@@ -106,7 +136,7 @@ var listItemEl;
 
 var todayDate = new Date();
 
-console.log(todayDate.getUTCDate());
+// console.log(todayDate.getUTCDate());
 
 var api_key = '7abe0932f2b74528ba9b8e95b598590f';
 
@@ -136,7 +166,7 @@ function teamSchedule(teamAbbreviation) {
   const searchParams = new URLSearchParams(params);
 
   var apiUrl = `https://api.sportsdata.io/v3/cbb/scores/json/TeamSchedule/2022/${teamAbbreviation}?${searchParams.toString()}`;
-  console.log(apiUrl);
+  // console.log(apiUrl);
 
   fetch(apiUrl).then(function (response) {
     if (response.ok) {
@@ -150,41 +180,36 @@ function teamSchedule(teamAbbreviation) {
   });
 };
 
-var createItems = function (element, className) {
-  var newItem = document.createElement(element);
-  newItem.setAttribute("class", className);
-}
-
 var getTeamData = function () {
   gameDates.innerHTML = "";
-  console.log(teamData);
+  // console.log(teamData);
   for (var i = 0; i < teamData.length; i++) {
 
     var homeTeam = teamData[i].HomeTeam;
     teamData.length = 7;
     if (homeTeam === getTeamAbbr) {
-      
+
       gameTime = teamData[i].DateTime;
       stadiumAddress = teamData[i].Stadium.Name + ", " + teamData[i].Stadium.City;
       var awayTeam = teamData[i].AwayTeam;
-// configure time and date using slice();
+      // configure time and date using slice();
       var startTime = gameTime.slice(11, 16);
       var dateConfig = gameTime.slice(0, 10);
       var monthDay = dateConfig.slice(5, 10);
       var year = dateConfig.slice(0, 4);
       var gameDate = monthDay + "-" + year;
-      var hourConfig = startTime.slice(0,2) - 12;
+      var hourConfig = startTime.slice(0, 2) - 12;
       hourConfig = hourConfig.toString();
-      var minuteConfig = startTime.slice(2,5);
-      
+      var minuteConfig = startTime.slice(2, 5);
+
       startTime = hourConfig + minuteConfig + "pm";
 
-      if(homeTeam === "NCAR"){
+      if (homeTeam === "NCAR") {
         homeTeam = "UNC";
       }
       var gameDateTime = "<h5>" + gameDate + " @ " + startTime + "</h5>" + "<h5>" + homeTeam + "</h5>" +
-      " vs." + "<h5>" + awayTeam + "</h5>" + "<h6>" + stadiumAddress + "</h6>" + "<div class='divider'></div>";
-  
+        " vs." + "<h5>" + awayTeam + "</h5>" + "<h6>" + stadiumAddress + "</h6>" + "<div class='divider'></div>";
+
       $(gameDates).append(gameDateTime);
     }
 
