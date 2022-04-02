@@ -12,7 +12,7 @@
 
 
 // Create a Leaflet map
-const map = L.map('my-map').setView([35.7596, 79.0193], 10);
+const map = L.map('my-map').setView([35.7596, -79.0193], 10);
 // Marker to save the position of found address
 let marker;
 
