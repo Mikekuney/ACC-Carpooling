@@ -57,7 +57,9 @@ function geocodeAddress() {
     document.getElementById("status").textContent = "The address string is too short. Enter at least three symbols";
     return;
   }
-
+  geoCodeAPICall();
+};
+function geoCodeAPICall(){
   const geocodingUrl = `https://api.geoapify.com/v1/geocode/search?text=${encodeURIComponent(address)}&apiKey=${myAPIKey}`;
 
   // call Geocoding API - https://www.geoapify.com/geocoding-api
@@ -82,6 +84,7 @@ function geocodeAddress() {
       marker = L.marker(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon)).addTo(map);
       map.panTo(new L.LatLng(foundAddress.properties.lat, foundAddress.properties.lon));
     });
+
   saveSearch()
 }
 
@@ -101,15 +104,40 @@ function saveSearch() {
 var createItem = function (element, className){
   var newItem = document.createElement(element);
   newItem.setAttribute("class", className);
+  return newItem;
+};
+// global search variable
+var search;
+var options;
+//get list container and create uo list
+var dropDownContainer = document.querySelector(".address-line");
+var dropdownContent = createItem("div", "dropdownContent");
+var optionListArray = [];
+var optionItemEl;
+var selectItemEl = createItem("select", "dropdown");
+
+selectItemEl.onchange = function(){
+  address = selectItemEl.value;
+  geoCodeAPICall();
 };
 
-function recentSearches() {
+dropDownContainer.appendChild(dropdownContent);
+dropdownContent.appendChild(selectItemEl);
 
+function recentSearches() {
+  
   for (var i = 0; i < userSearch.length; i++) {
-    console.log(userSearch[i]); 
+    // console.log(userSearch[i]); 
+    search = userSearch[i];
+    optionItemEl = createItem("option", "recentSearch");
+    optionItemEl.setAttribute("value", search);
+    optionItemEl.innerHTML = search;
+    selectItemEl.appendChild(optionItemEl);
   }
   
-}
+
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
 var api_key = '02f2795b43078e88ef905f7d5da7';
 
