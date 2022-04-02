@@ -90,7 +90,9 @@ main {
 }
 
 .status {
-    padding: 10px;
+  flex-wrap: flex;
+  padding: 10px;
+  width: 50px
 }
 
 #my-map {
