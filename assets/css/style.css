@@ -69,11 +69,9 @@ main {
   height: 100%;
   margin: 0;
 }
-.map-main {
-  display: none;
-}
+
 #game-container {
-  height: 100%;
+  height: calc(100% - 80px);
   width: 50%;
   overflow: hidden;
 }
@@ -100,11 +98,26 @@ main {
 #my-map {
   padding: 150px;
   margin-top: 15px;
-  height: 125px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
+}
+.map-main {
+  display: block;
+}
+.controls {
+  display: block;
 }
 
-.controls {
+.address-line {
+  width: 30%;
+}
+#address {
+  color: white;
+  text-shadow: 1px, 1px, 2px black;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.form {
   display: none;
 }
 
