@@ -88,6 +88,8 @@ function geoCodeAPICall(){
   saveSearch()
 }
 
+// save searches to localStorage
+
 var userSearch;
 
 function saveSearch() {
@@ -101,15 +103,19 @@ function saveSearch() {
   localStorage.setItem("userSearch", JSON.stringify(userSearch));
   recentSearches()
 };
+
 var createItem = function (element, className){
   var newItem = document.createElement(element);
   newItem.setAttribute("class", className);
   return newItem;
 };
-// global search variable
+
+// global variable
 var search;
 var options;
-//get list container and create uo list
+
+//get list container and create div and select elements
+
 var dropDownContainer = document.querySelector(".address-line");
 var dropdownContent = createItem("div", "dropdownContent");
 var optionListArray = [];
@@ -124,17 +130,22 @@ selectItemEl.onchange = function(){
 dropDownContainer.appendChild(dropdownContent);
 dropdownContent.appendChild(selectItemEl);
 
+// create list option elements from recent searches
+
 function recentSearches() {
-  
+  address = "";
   for (var i = 0; i < userSearch.length; i++) {
     // console.log(userSearch[i]); 
     search = userSearch[i];
-    optionItemEl = createItem("option", "recentSearch");
-    optionItemEl.setAttribute("value", search);
-    optionItemEl.innerHTML = search;
-    selectItemEl.appendChild(optionItemEl);
+      if(!optionListArray.includes(search)){
+        optionListArray.push(search);
+        optionItemEl = createItem("option", "recentSearch");
+        optionItemEl.setAttribute("value", search);
+        optionItemEl.innerHTML = search;
+        selectItemEl.appendChild(optionItemEl);
+    }
+   
   }
-  
 
 };
 
