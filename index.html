@@ -51,17 +51,17 @@
       </section>
       <div class="divider"></div>
       <div id="game-container" class="row">
-        <section id="games" class="sm6 center-align offset-s6 l2 game-list">
-          <div>
-              <h3 class="section-title">Upcoming Games</h3>
+        <section id="games" class="sm6 center-align l2 game-list">
+          <div class="section-title">
+              <h4>Upcoming Games</h4>
               <p class="game-dates"></p>
           </div>
         </section>
       </div>
     </div>
-    <div class="map-main">
+    <div class="map-main ">
       <div class="controls">
-        <div class="address-line">
+        <div class="address-line container">
             <input id="address" type="text" onfocus="this.value=''" placeholder="Enter address to search" />
             <button class="search-button" onclick="geocodeAddress()">Search</button>  
         </div>
@@ -89,7 +89,7 @@
       </div>
     
     </div>
-    <div id="my-map"></div>
+    <div id="my-map" class="container"></div>
     <div id="about" class="container">About</div> 
   </main>
   
